@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精選咖啡豆菜單 & 隨機抽籤器</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        coffee: {
+                            50: '#fdfbf7',
+                            100: '#f7f0e6',
+                            200: '#ebd9c3',
+                            300: '#ddbc99',
+                            400: '#cb9b6e',
+                            500: '#bd7f49',
+                            600: '#a56238',
+                            700: '#85492e',
+                            800: '#6d3c2a',
+                            900: '#583225',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-flip-container {
+            perspective: 1000px;
+        }
+        .card-flip-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        .card-flip-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.95; transform: scale(0.98); }
+        }
+        .anim-pulse {
+            animation: pulse-subtle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-coffee-50 min-h-screen font-sans text-gray-800 flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="bg-coffee-900 text-amber-50 shadow-md py-6 px-4 border-b border-coffee-700">
+        <div class="max-w-5xl mx-auto text-center space-y-2">
+            <div class="inline-flex items-center space-x-2 text-amber-400">
+                <i class="fa-solid fa-mug-hot text-2xl"></i>
+                <span class="text-xs uppercase tracking-widest font-semibold">Specialty Coffee Menu</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-serif font-bold tracking-wide text-amber-100">精選咖啡豆菜單</h1>
+            <p class="text-coffee-200 text-sm max-w-md mx-auto">風味探索 · 精緻淺焙與配方選擇</p>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-12">
+
+        <!-- Top Section: 6 Coffees Grid (2 columns x 3 rows = 6 blocks) -->
+        <section>
+            <div class="flex items-center justify-between mb-6 border-b border-coffee-200 pb-3">
+                <h2 class="text-xl font-serif font-bold text-coffee-900 flex items-center gap-2">
+                    <i class="fa-solid fa-border-all text-coffee-600"></i>
+                    <span>全系列 6 款精選咖啡豆</span>
+                </h2>
+                <span class="text-xs text-coffee-600 font-medium bg-coffee-100 px-3 py-1 rounded-full border border-coffee-200">
+                    2 欄 × 3 列對稱排列
+                </span>
+            </div>
+
+            <!-- Forced 2-column Grid for 6 blocks -->
+            <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                
+                <!-- 1. 衣索比亞 南方森林 -->
+                <div class="bg-white rounded-xl shadow-sm border border-coffee-200 p-3 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 mb-1">
+                            <span class="truncate font-semibold text-[10px] sm:text-xs text-coffee-700">SUNDAWN COFFEE</span>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded">水洗</span>
+                        </div>
+                        <h3 class="font-bold text-coffee-900 text-xs sm:text-sm leading-snug mb-1">衣索比亞 南方森林 卡法藝伎 G1</h3>
+                        <p class="text-[10px] text-gray-400 mb-2 truncate">Nation And Nationalities Keffa Zone</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">野薑花</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">佛手柑</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">柑橘花蜜</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                        <span><i class="fa-solid fa-fire text-amber-500 mr-1"></i>淺焙</span>
+                        <span class="text-emerald-700 font-medium"><i class="fa-solid fa-tree mr-1"></i>森林概念意象</span>
+                    </div>
+                </div>
+
+                <!-- 2. 季節限定 招桃花 -->
+                <div class="bg-white rounded-xl shadow-sm border border-coffee-200 p-3 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 mb-1">
+                            <span class="truncate font-semibold text-[10px] sm:text-xs text-coffee-700">SUNDAWN COFFEE</span>
+                            <span class="bg-rose-100 text-rose-800 text-[10px] px-1.5 py-0.5 rounded">日曬</span>
+                        </div>
+                        <h3 class="font-bold text-coffee-900 text-xs sm:text-sm leading-snug mb-1">季節限定 招桃花 配方</h3>
+                        <p class="text-[10px] text-gray-400 mb-2 truncate">Seasonal sun dawn coffee roaster</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">水蜜桃</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">蘋果花</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">玫瑰柑橘</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                        <span><i class="fa-solid fa-fire text-amber-500 mr-1"></i>淺焙</span>
+                        <span class="text-rose-600 font-medium"><i class="fa-solid fa-apple-whole mr-1"></i>桃花朵朵意象</span>
+                    </div>
+                </div>
+
+                <!-- 3. 衣索比亞 谷吉 啵啵莎鎮 -->
+                <div class="bg-white rounded-xl shadow-sm border border-coffee-200 p-3 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 mb-1">
+                            <span class="truncate font-semibold text-[10px] sm:text-xs text-coffee-700">SUNDAWN COFFEE</span>
+                            <span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded">水洗</span>
+                        </div>
+                        <h3 class="font-bold text-coffee-900 text-xs sm:text-sm leading-snug mb-1">衣索比亞 谷吉 啵啵莎鎮</h3>
+                        <p class="text-[10px] text-gray-400 mb-2 truncate">Ethiopia Guji Birbirsa Kojowa Washed</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">花香</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">柑橘皮</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">杏桃果乾</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                        <span><i class="fa-solid fa-fire text-amber-500 mr-1"></i>淺焙</span>
+                        <span class="text-cyan-700 font-medium"><i class="fa-solid fa-mountain mr-1"></i>山水意象概念</span>
+                    </div>
+                </div>
+
+                <!-- 4. 哥斯大黎加 塔拉珠 -->
+                <div class="bg-white rounded-xl shadow-sm border border-coffee-200 p-3 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 mb-1">
+                            <span class="truncate font-semibold text-[10px] sm:text-xs text-coffee-700">RITROVARE COFFEE</span>
+                            <span class="bg-rose-100 text-rose-800 text-[10px] px-1.5 py-0.5 rounded">日曬</span>
+                        </div>
+                        <h3 class="font-bold text-coffee-900 text-xs sm:text-sm leading-snug mb-1">哥斯大黎加 塔拉珠 海倫莊園</h3>
+                        <p class="text-[10px] text-gray-400 mb-2 truncate">Costa Rica Tarrazu Helen Estate SHB</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">鳳梨</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">黑莓</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">可可紅糖</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                        <span><i class="fa-solid fa-fire text-amber-600 mr-1"></i>淺中焙 (85)</span>
+                        <span class="text-emerald-800 font-medium"><i class="fa-solid fa-hippo mr-1"></i>熱帶雨林意象</span>
+                    </div>
+                </div>
+
+                <!-- 5. BLEND 莓莓香遇 -->
+                <div class="bg-white rounded-xl shadow-sm border border-coffee-200 p-3 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 mb-1">
+                            <span class="truncate font-semibold text-[10px] sm:text-xs text-coffee-700">RITROVARE COFFEE</span>
+                            <span class="bg-purple-100 text-purple-800 text-[10px] px-1.5 py-0.5 rounded">其它處理</span>
+                        </div>
+                        <h3 class="font-bold text-coffee-900 text-xs sm:text-sm leading-snug mb-1">Blend 莓莓香遇</h3>
+                        <p class="text-[10px] text-gray-400 mb-2 truncate">Specialty Coffee Blend</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">莓果草莓</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">檸檬</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">紅茶</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                        <span><i class="fa-solid fa-fire text-amber-600 mr-1"></i>淺中焙 (85)</span>
+                        <span class="text-purple-700 font-medium"><i class="fa-solid fa-basket-shopping mr-1"></i>綜合野莓意象</span>
+                    </div>
+                </div>
+
+                <!-- 6. BLEND 尋果派對 -->
+                <div class="bg-white rounded-xl shadow-sm border border-coffee-200 p-3 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 mb-1">
+                            <span class="truncate font-semibold text-[10px] sm:text-xs text-coffee-700">RITROVARE COFFEE</span>
+                            <span class="bg-purple-100 text-purple-800 text-[10px] px-1.5 py-0.5 rounded">其它處理</span>
+                        </div>
+                        <h3 class="font-bold text-coffee-900 text-xs sm:text-sm leading-snug mb-1">Blend 尋果派對</h3>
+                        <p class="text-[10px] text-gray-400 mb-2 truncate">Specialty Coffee Blend</p>
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">水蜜桃</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">葡萄</span>
+                            <span class="bg-coffee-50 text-coffee-700 text-[10px] px-1.5 py-0.5 rounded border border-coffee-100">柑橘紅茶</span>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                        <span><i class="fa-solid fa-fire text-amber-600 mr-1"></i>淺中焙 (85)</span>
+                        <span class="text-amber-700 font-medium"><i class="fa-solid fa-lemon mr-1"></i>水果派對意象</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Bottom Section: Giant Title & Interactive Picker -->
+        <section class="bg-gradient-to-b from-coffee-100 to-coffee-200/60 rounded-3xl p-6 md:p-10 border border-coffee-300 text-center shadow-lg space-y-6">
+            
+            <!-- Large Attention Title -->
+            <div class="space-y-2">
+                <span class="bg-coffee-800 text-amber-200 text-xs px-3 py-1 rounded-full uppercase tracking-widest font-medium">Coffee Picker</span>
+                <h2 class="text-2xl sm:text-4xl md:text-5xl font-serif font-black text-coffee-900 tracking-tight leading-tight">
+                    不知道喝什麼？<br class="sm:hidden"/>我幫你決定！
+                </h2>
+                <p class="text-coffee-700 text-sm md:text-base">按下按鈕，交給運命抽取今天最適合你的精品咖啡！</p>
+            </div>
+
+            <!-- Card Picker Display Area -->
+            <div class="max-w-md mx-auto card-flip-container h-80 my-4">
+                <div id="cardInner" class="card-flip-inner w-full h-full relative">
+                    
+                    <!-- Card Front (Initial Cover State) -->
+                    <div class="card-front absolute inset-0 bg-white rounded-2xl p-6 shadow-md border-2 border-coffee-300 flex flex-col items-center justify-center space-y-4">
+                        <div class="w-20 h-20 bg-coffee-100 text-coffee-700 rounded-full flex items-center justify-center text-4xl anim-pulse">
+                            <i class="fa-solid fa-dice-d20"></i>
+                        </div>
+                        <div>
+                            <h3 id="resultTitle" class="text-xl font-serif font-bold text-coffee-900">準備好抽取了嗎？</h3>
+                            <p id="resultSubtitle" class="text-sm text-coffee-600 mt-1">點擊下方按鈕啟動隨機轉盤</p>
+                        </div>
+                    </div>
+
+                    <!-- Card Back (Selected Result State) -->
+                    <div class="card-back absolute inset-0 bg-coffee-900 text-amber-50 rounded-2xl p-6 shadow-xl border-2 border-amber-400 flex flex-col justify-between text-left">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span id="resTag" class="bg-amber-400 text-coffee-900 font-bold text-xs px-2.5 py-1 rounded-full">處理法</span>
+                                <span id="resRoast" class="text-amber-200 text-xs">焙度</span>
+                            </div>
+                            <h3 id="resName" class="text-xl font-serif font-bold text-amber-100 leading-snug mb-1">咖啡名稱</h3>
+                            <p id="resDesc" class="text-xs text-coffee-300 mb-4">副標資訊</p>
+                            
+                            <div class="space-y-2 bg-coffee-800/80 p-3 rounded-lg border border-coffee-700">
+                                <span class="text-[11px] text-amber-300 font-semibold block uppercase tracking-wider">風味筆記 Tasting Notes</span>
+                                <div id="resFlavors" class="flex flex-wrap gap-1.5">
+                                    <!-- Dynamic flavor tags -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-coffee-800 flex items-center justify-between text-xs text-coffee-300">
+                            <span id="resRoaster"><i class="fa-solid fa-shop mr-1"></i>烘焙商</span>
+                            <span class="text-amber-400"><i class="fa-solid fa-star mr-1"></i>今日推薦</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Trigger Button -->
+            <div class="pt-2">
+                <button id="pickBtn" onclick="pickRandomCoffee()" class="w-full sm:w-auto px-10 py-4 bg-coffee-800 hover:bg-coffee-900 text-amber-100 font-serif font-bold text-lg rounded-2xl shadow-xl hover:shadow-2xl transition transform active:scale-95 flex items-center justify-center gap-3 mx-auto border border-amber-500/30">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400 text-xl"></i>
+                    <span>幫我決定今天喝什麼！</span>
+                </button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-coffee-900 text-coffee-400 text-xs py-6 text-center border-t border-coffee-800">
+        <p>© 真香精品咖啡 · 精選 6 款風味展演</p>
+    </footer>
+
+    <!-- JavaScript Data & Interaction -->
+    <script>
+        const coffees = [
+            {
+                id: 1,
+                name: "衣索比亞 南方森林 卡法藝伎 G1",
+                sub: "Nation And Nationalities Keffa Zone Gesha District",
+                roaster: "SUNDA WN COFFEE ROASTER",
+                process: "水洗 (Wash)",
+                roast: "淺焙",
+                flavors: ["野薑花", "佛手柑", "柑橘", "花蜜", "甜感豐富"],
+                concept: "森林概念意象",
+                bgTag: "bg-amber-100 text-amber-800"
+            },
+            {
+                id: 2,
+                name: "季節限定 招桃花 配方",
+                sub: "Seasonal sun dawn coffee roaster",
+                roaster: "SUNDA WN COFFEE ROASTER",
+                process: "日曬 (Natural)",
+                roast: "淺焙",
+                flavors: ["水蜜桃", "蘋果花", "玫瑰花", "柑橘", "甜橙"],
+                concept: "桃花朵朵意象",
+                bgTag: "bg-rose-100 text-rose-800"
+            },
+            {
+                id: 3,
+                name: "衣索比亞 谷吉 啵啵莎鎮",
+                sub: "Ethiopia Guji Birbirsa Kojowa Washed",
+                roaster: "SUNDA WN COFFEE ROASTER",
+                process: "水洗 (Wash)",
+                roast: "淺焙",
+                flavors: ["花香", "柑橘皮", "杏桃果乾", "平衡佳"],
+                concept: "山水意象概念",
+                bgTag: "bg-amber-100 text-amber-800"
+            },
+            {
+                id: 4,
+                name: "哥斯大黎加 塔拉珠 海倫莊園",
+                sub: "Costa Rica Tarrazu Helen Estate SHB",
+                roaster: "RITROVARE SPECIALTY COFFEE",
+                process: "日曬 (Natural)",
+                roast: "淺中焙 (85)",
+                flavors: ["鳳梨", "果乾", "黑莓", "可可", "紅糖"],
+                concept: "熱帶雨林意象",
+                bgTag: "bg-rose-100 text-rose-800"
+            },
+            {
+                id: 5,
+                name: "Blend 莓莓香遇",
+                sub: "Specialty Coffee Blend",
+                roaster: "RITROVARE SPECIALTY COFFEE",
+                process: "其它處理",
+                roast: "淺中焙 (85)",
+                flavors: ["莓果", "草莓", "柑橘", "檸檬", "紅茶"],
+                concept: "綜合野莓意象",
+                bgTag: "bg-purple-100 text-purple-800"
+            },
+            {
+                id: 6,
+                name: "Blend 尋果派對",
+                sub: "Specialty Coffee Blend",
+                roaster: "RITROVARE SPECIALTY COFFEE",
+                process: "其它處理",
+                roast: "淺中焙 (85)",
+                flavors: ["水蜜桃", "葡萄", "柑橘", "紅茶"],
+                concept: "水果派對意象",
+                bgTag: "bg-purple-100 text-purple-800"
+            }
+        ];
+
+        let isPicking = false;
+
+        function pickRandomCoffee() {
+            if (isPicking) return;
+            isPicking = true;
+
+            const cardInner = document.getElementById('cardInner');
+            const btn = document.getElementById('pickBtn');
+            
+            // Turn back to front if already flipped
+            if (cardInner.classList.contains('is-flipped')) {
+                cardInner.classList.remove('is-flipped');
+            }
+
+            // Button animation during pick
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+
+            setTimeout(() => {
+                // Pick random index
+                const randomIndex = Math.floor(Math.random() * coffees.length);
+                const item = coffees[randomIndex];
+
+                // Populate Back Card
+                document.getElementById('resName').innerText = item.name;
+                document.getElementById('resDesc').innerText = item.sub;
+                document.getElementById('resTag').innerText = item.process;
+                document.getElementById('resRoast').innerText = item.roast;
+                document.getElementById('resRoaster').innerText = item.roaster;
+
+                const flavorContainer = document.getElementById('resFlavors');
+                flavorContainer.innerHTML = '';
+                item.flavors.forEach(f => {
+                    const span = document.createElement('span');
+                    span.className = 'bg-coffee-700 text-amber-200 text-xs px-2 py-0.5 rounded border border-coffee-600';
+                    span.innerText = f;
+                    flavorContainer.appendChild(span);
+                });
+
+                // Flip Card
+                cardInner.classList.add('is-flipped');
+
+                btn.disabled = false;
+                btn.classList.remove('opacity-75');
+                isPicking = false;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
